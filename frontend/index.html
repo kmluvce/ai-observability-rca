@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Observability RCA System</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>🔍 AI Observability RCA System</h1>
+            <p>Generative AI-Driven Root Cause Analysis for Modern IT Systems</p>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="nav">
+            <a href="/" class="nav-link active">RCA Analysis</a>
+            <a href="/bulk-upload" class="nav-link">Bulk Upload</a>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Status Bar -->
+            <div id="status-bar" class="status-bar hidden">
+                <div class="status-content">
+                    <span id="status-text">Ready</span>
+                    <div id="loading-spinner" class="spinner hidden"></div>
+                </div>
+            </div>
+
+            <!-- Input Form -->
+            <section class="form-section">
+                <h2>📊 Submit Observability Data</h2>
+                <form id="rca-form" class="rca-form">
+                    <div class="form-group">
+                        <label for="logs">🗒️ Logs Data:</label>
+                        <textarea 
+                            id="logs" 
+                            name="logs" 
+                            placeholder="Paste your log data here (e.g., application logs, system logs, error logs)..."
+                            required
+                        ></textarea>
+                        <small class="form-hint">Include timestamps, error messages, and relevant log entries</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="metrics">📈 Metrics Data:</label>
+                        <textarea 
+                            id="metrics" 
+                            name="metrics" 
+                            placeholder="Paste your metrics data here (e.g., CPU usage, memory, disk I/O, network stats)..."
+                            required
+                        ></textarea>
+                        <small class="form-hint">Include performance metrics, system resource usage, and KPIs</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="traces">🔗 Traces Data:</label>
+                        <textarea 
+                            id="traces" 
+                            name="traces" 
+                            placeholder="Paste your trace data here (e.g., distributed traces, request flows, service interactions)..."
+                            required
+                        ></textarea>
+                        <small class="form-hint">Include request tracing, service calls, and latency information</small>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" id="analyze-btn" class="btn btn-primary">
+                            🚀 Generate RCA Analysis
+                        </button>
+                        <button type="button" id="clear-btn" class="btn btn-secondary">
+                            🗑️ Clear All
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Results Section -->
+            <section id="results-section" class="results-section hidden">
+                <h2>📋 Root Cause Analysis Results</h2>
+                
+                <div class="result-header">
+                    <div class="result-info">
+                        <span id="analysis-id" class="analysis-id"></span>
+                        <span id="analysis-timestamp" class="timestamp"></span>
+                    </div>
+                    <div class="result-actions">
+                        <button id="copy-result-btn" class="btn btn-small">📋 Copy</button>
+                        <button id="download-result-btn" class="btn btn-small">💾 Download</button>
+                    </div>
+                </div>
+
+                <div id="rca-result" class="rca-result">
+                    <!-- RCA result will be populated here -->
+                </div>
+
+                <!-- Similar Cases -->
+                <div id="similar-cases-section" class="similar-cases hidden">
+                    <h3>🔄 Similar Historical Cases</h3>
+                    <div id="similar-cases-list">
+                        <!-- Similar cases will be populated here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Search Section -->
+            <section class="search-section">
+                <h2>🔍 Search Historical Cases</h2>
+                <div class="search-form">
+                    <input 
+                        type="text" 
+                        id="search-input" 
+                        placeholder="Search for similar issues, errors, or patterns..."
+                        class="search-input"
+                    >
+                    <button id="search-btn" class="btn btn-primary">Search</button>
+                </div>
+                
+                <div id="search-results" class="search-results hidden">
+                    <!-- Search results will be populated here -->
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2025 AI Observability RCA System - Powered by Ollama & Llama3</p>
+            <div class="footer-links">
+                <a href="/api/health" target="_blank">API Health</a>
+                <a href="https://github.com/ollama/ollama" target="_blank">Ollama Documentation</a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="/static/js/main.js"></script>
+</body>
+</html>
