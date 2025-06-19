@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bulk Upload - AI Observability RCA System</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>📤 Bulk Data Upload</h1>
+            <p>Upload historical logs, metrics, traces, and RCA data for enhanced analysis</p>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="nav">
+            <a href="/" class="nav-link">RCA Analysis</a>
+            <a href="/bulk-upload" class="nav-link active">Bulk Upload</a>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Status Bar -->
+            <div id="status-bar" class="status-bar hidden">
+                <div class="status-content">
+                    <span id="status-text">Ready</span>
+                    <div id="loading-spinner" class="spinner hidden"></div>
+                </div>
+            </div>
+
+            <!-- Upload Instructions -->
+            <section class="instructions-section">
+                <h2>📖 Upload Instructions</h2>
+                <div class="instructions">
+                    <div class="instruction-item">
+                        <h3>📄 Supported File Formats</h3>
+                        <ul>
+                            <li><strong>JSON:</strong> Structured data with key-value pairs</li>
+                            <li><strong>CSV:</strong> Comma-separated values with headers</li>
+                            <li><strong>XLSX:</strong> Excel spreadsheets</li>
+                            <li><strong>TXT:</strong> Plain text files</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="instruction-item">
+                        <h3>📊 Data Categories</h3>
+                        <ul>
+                            <li><strong>Logs:</strong> Application and system log files</li>
+                            <li><strong>Metrics:</strong> Performance and monitoring data</li>
+                            <li><strong>Traces:</strong> Distributed tracing information</li>
+                            <li><strong>RCA:</strong> Historical root cause analysis reports</li>
+                        </ul>
+                    </div>
+
+                    <div class="instruction-item">
+                        <h3>💡 Best Practices</h3>
+                        <ul>
+                            <li>Include timestamps when possible</li>
+                            <li>Use consistent field names across files</li>
+                            <li>Include relevant metadata and context</li>
+                            <li>Larger files may take longer to process</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Upload Form -->
+            <section class="upload-section">
+                <h2>📂 Upload Files</h2>
+                <form id="bulk-upload-form" class="upload-form" enctype="multipart/form-data">
+                    <div class="upload-grid">
+                        <div class="upload-group">
+                            <label for="logs-file">🗒️ Logs File:</label>
+                            <div class="file-input-wrapper">
+                                <input type="file" id="logs-file" name="logs_file" accept=".json,.csv,.xlsx,.txt">
+                                <div class="file-input-display">
+                                    <span class="file-placeholder">Choose logs file...</span>
+                                    <button type="button" class="file-browse-btn">Browse</button>
+                                </div>
+                            </div>
+                            <small class="form-hint">Upload historical log data</small>
+                        </div>
+
+                        <div class="upload-group">
+                            <label for="metrics-file">📈 Metrics File:</label>
+                            <div class="file-input-wrapper">
+                                <input type="file" id="metrics-file" name="metrics_file" accept=".json,.csv,.xlsx,.txt">
+                                <div class="file-input-display">
+                                    <span class="file-placeholder">Choose metrics file...</span>
+                                    <button type="button" class="file-browse-btn">Browse</button>
+                                </div>
+                            </div>
+                            <small class="form-hint">Upload performance metrics and monitoring data</small>
+                        </div>
+
+                        <div class="upload-group">
+                            <label for="traces-file">🔗 Traces File:</label>
+                            <div class="file-input-wrapper">
+                                <input type="file" id="traces-file" name="traces_file" accept=".json,.csv,.xlsx,.txt">
+                                <div class="file-input-display">
+                                    <span class="file-placeholder">Choose traces file...</span>
+                                    <button type="button" class="file-browse-btn">Browse</button>
+                                </div>
+                            </div>
+                            <small class="form-hint">Upload distributed tracing data</small>
+                        </div>
+
+                        <div class="upload-group">
+                            <label for="rca-file">📋 RCA File:</label>
+                            <div class="file-input-wrapper">
+                                <input type="file" id="rca-file" name="rca_file" accept=".json,.csv,.xlsx,.txt">
+                                <div class="file-input-display">
+                                    <span class="file-placeholder">Choose RCA file...</span>
+                                    <button type="button" class="file-browse-btn">Browse</button>
+                                </div>
+                            </div>
+                            <small class="form-hint">Upload historical RCA reports</small>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" id="upload-btn" class="btn btn-primary">
+                            🚀 Upload Files
+                        </button>
+                        <button type="button" id="clear-files-btn" class="btn btn-secondary">
+                            🗑️ Clear All
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Upload Progress -->
+            <section id="upload-progress-section" class="upload-progress-section hidden">
+                <h3>📊 Upload Progress</h3>
+                <div class="progress-bar">
+                    <div id="progress-bar-fill" class="progress-bar-fill"></div>
+                </div>
+                <div id="progress-text" class="progress-text">0% Complete</div>
+            </section>
+
+            <!-- Upload Results -->
+            <section id="upload-results-section" class="upload-results-section hidden">
+                <h2>✅ Upload Results</h2>
+                
+                <div class="upload-summary">
+                    <div class="summary-stat">
+                        <span class="stat-label">Files Uploaded:</span>
+                        <span id="files-uploaded-count" class="stat-value">0</span>
+                    </div>
+                    <div class="summary-stat">
+                        <span class="stat-label">Records Processed:</span>
+                        <span id="records-processed-count" class="stat-value">0</span>
+                    </div>
+                    <div class="summary-stat">
+                        <span class="stat-label">Status:</span>
+                        <span id="upload-status" class="stat-value">-</span>
+                    </div>
+                </div>
+
+                <div id="uploaded-files-list" class="uploaded-files-list">
+                    <!-- Uploaded files details will be populated here -->
+                </div>
+
+                <div class="result-actions">
+                    <button id="view-database-stats-btn" class="btn btn-primary">
+                        📊 View Database Stats
+                    </button>
+                    <button id="upload-more-btn" class="btn btn-secondary">
+                        ➕ Upload More Files
+                    </button>
+                </div>
+            </section>
+
+            <!-- Database Statistics -->
+            <section id="database-stats-section" class="database-stats-section hidden">
+                <h2>📊 Database Statistics</h2>
+                <div id="database-stats-content">
+                    <!-- Database stats will be populated here -->
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2025 AI Observability RCA System - Powered by Ollama & Llama3</p>
+            <div class="footer-links">
+                <a href="/api/health" target="_blank">API Health</a>
+                <a href="https://github.com/ollama/ollama" target="_blank">Ollama Documentation</a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="/static/js/bulk_upload.js"></script>
+</body>
+</html>
